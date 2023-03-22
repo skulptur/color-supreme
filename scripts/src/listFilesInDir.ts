@@ -11,5 +11,7 @@ export async function listFilesInDir(dirPath: string): Promise<string[]> {
     }
   })
   const filePaths = await Promise.all(promises)
-  return filePaths.filter((filePath) => filePath !== undefined) as string[]
+  return filePaths.filter((filePath) => {
+    return filePath !== undefined && !path.basename(filePath).startsWith('.')
+  }) as string[]
 }

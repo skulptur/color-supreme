@@ -19,19 +19,29 @@ const getColors = async (imagePath: string, colors = 5) => {
   return getDominantColors(pixels, colors).map(rgbToHex)
 }
 
+const imageWithSwatch = (imagePath: string, colors: Array<string>) => {
+  return `
+  <img src="images/${path.basename(imagePath)}" alt="Example Image" width="200" height="200">
+  <span style="color:${colors[0]}; font-size:40px">■</span>
+  <span style="color:${colors[1]}; font-size:40px">■</span>
+  <span style="color:${colors[2]}; font-size:40px">■</span>
+  <span style="color:${colors[3]}; font-size:40px">■</span>
+  <span style="color:${colors[4]}; font-size:40px">■</span>
+  `
+}
+
 const updateMarkdown = async () => {
   const fileContents = fs.readFileSync(readme, 'utf8')
   // Find the start and end comment in the file using a regular expression:
   const regex = new RegExp(`${startComment}[\\s\\S]*${endComment}`)
-  const match = fileContents.match(regex)
-  // This regular expression matches everything between the start and end comments, including the comments themselves.
 
   // Generate the dynamic content that will replace the section between the comments.
   const imagePaths = await listFilesInDir(imagesDir)
   const contents = await Promise.all(
     imagePaths.map(async (path) => {
       const colors = await getColors(path)
-      return colors.join(',')
+
+      return imageWithSwatch(path, colors)
     })
   )
   const finalContents = contents.join('\n')
@@ -40,7 +50,7 @@ const updateMarkdown = async () => {
     regex,
     `${startComment}\n${finalContents}\n${endComment}`
   )
-  // Replace the matched section with the dynamic content:
+  // Replace the matched section with the dynamic content
   // Write the new contents back to the file:
   fs.writeFileSync(readme, newFileContents, 'utf8')
 }

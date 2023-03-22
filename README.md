@@ -45,13 +45,40 @@ const getColors = async (path: string, colors = 5) => {
 getColors('your image path').then(console.log)
 ```
 
-<img src="images/test_image.png" alt="Example Image" width="200" height="200">
+<!-- START GENERATED CONTENT -->
 
-<span style="color:#1b1b1b; font-size:40px">■</span>
-<span style="color:#d2cdb0; font-size:40px">■</span>
-<span style="color:#b0d1cd; font-size:40px">■</span>
-<span style="color:#cdb2d3; font-size:40px">■</span>
-<span style="color:#0f15d3; font-size:40px">■</span>
+  <img src="images/dreamlikeartheadandshoulde_13717361.png" alt="Example Image" width="200" height="200">
+  <span style="color:#a69418; font-size:40px">■</span>
+  <span style="color:#232123; font-size:40px">■</span>
+  <span style="color:#766c78; font-size:40px">■</span>
+  <span style="color:#16a896; font-size:40px">■</span>
+  <span style="color:#cfbfcd; font-size:40px">■</span>
+  
+
+  <img src="images/dreamlikeartheadandshoulde_31881958.png" alt="Example Image" width="200" height="200">
+  <span style="color:#c2193e; font-size:40px">■</span>
+  <span style="color:#c4c4c4; font-size:40px">■</span>
+  <span style="color:#3fc219; font-size:40px">■</span>
+  <span style="color:#1c1c1c; font-size:40px">■</span>
+  <span style="color:#1a3fc1; font-size:40px">■</span>
+  
+
+  <img src="images/dreamlikeartheadandshoulde_50300776.png" alt="Example Image" width="200" height="200">
+  <span style="color:#292829; font-size:40px">■</span>
+  <span style="color:#8d5db2; font-size:40px">■</span>
+  <span style="color:#7e8575; font-size:40px">■</span>
+  <span style="color:#575959; font-size:40px">■</span>
+  <span style="color:#c0cdbb; font-size:40px">■</span>
+  
+
+  <img src="images/dreamlikeartheadandshoulde_88640242.png" alt="Example Image" width="200" height="200">
+  <span style="color:#397238; font-size:40px">■</span>
+  <span style="color:#c7c8c7; font-size:40px">■</span>
+  <span style="color:#373972; font-size:40px">■</span>
+  <span style="color:#723839; font-size:40px">■</span>
+  <span style="color:#818281; font-size:40px">■</span>
+  
+<!-- END GENERATED CONTENT -->
 
 ---
 
