@@ -1,11 +1,13 @@
 import sharp from 'sharp'
-import { getDominantColors, imageToPixels, rgbToHex } from '../../dist'
+import { getDominantColors, imageToPixels } from '../../dist'
 import path from 'path'
 import { listFilesInDir } from './listFilesInDir'
+import { createSwatch } from './createSwatch'
 const fs = require('fs')
 
 const root = path.join(__dirname, '..', '..')
 const imagesDir = path.resolve(root, './images/')
+const generatedImagesDir = path.resolve(imagesDir, './generated/')
 const readme = path.resolve(root, './README.md')
 const startComment = '<!-- START GENERATED CONTENT -->'
 const endComment = '<!-- END GENERATED CONTENT -->'
@@ -16,17 +18,13 @@ const getColors = async (imagePath: string, colors = 5) => {
     .toBuffer({ resolveWithObject: true })
   const pixels = imageToPixels(data, info.width!, info.height!)
 
-  return getDominantColors(pixels, colors).map(rgbToHex)
+  return getDominantColors(pixels, colors)
 }
 
-const imageWithSwatch = (imagePath: string, colors: Array<string>) => {
+const imageWithSwatch = (imagePath: string, swatchPath: string) => {
   return `
   <img src="images/${path.basename(imagePath)}" alt="Example Image" width="200" height="200">
-  <span style="color:${colors[0]}; font-size:40px">■</span>
-  <span style="color:${colors[1]}; font-size:40px">■</span>
-  <span style="color:${colors[2]}; font-size:40px">■</span>
-  <span style="color:${colors[3]}; font-size:40px">■</span>
-  <span style="color:${colors[4]}; font-size:40px">■</span>
+  <img src="images/generated/${path.basename(swatchPath)}" alt="Example Image swatch" >
   `
 }
 
@@ -38,10 +36,12 @@ const updateMarkdown = async () => {
   // Generate the dynamic content that will replace the section between the comments.
   const imagePaths = await listFilesInDir(imagesDir)
   const contents = await Promise.all(
-    imagePaths.map(async (path) => {
-      const colors = await getColors(path)
+    imagePaths.map(async (imagePath) => {
+      const colors = await getColors(imagePath)
+      const imageFilenameName = path.basename(imagePath)
+      const generatedSwatch = createSwatch(colors, generatedImagesDir + '/' + imageFilenameName)
 
-      return imageWithSwatch(path, colors)
+      return imageWithSwatch(imagePath, generatedSwatch)
     })
   )
   const finalContents = contents.join('\n')
