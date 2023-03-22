@@ -1,70 +1,16 @@
-import * as fs from 'fs'
-import * as path from 'path'
-import * as ts from 'typescript'
+import sharp from 'sharp'
+import { getDominantColors, imageToPixels, rgbToHex } from '../../dist'
+import path from 'path'
 
-const rootPath = path.join(__dirname, '..', '..')
+const test_image = path.resolve(path.join(__dirname, '..', '..'), './images/test_image.png')
 
-const indexFilePath = rootPath + '/src/index.ts'
-const outputFile = './output.ts'
+const getColors = async (imagePath: string, colors = 5) => {
+  const { data, info } = await sharp(imagePath)
+    .raw()
+    .toBuffer({ resolveWithObject: true })
+  const pixels = imageToPixels(data, info.width!, info.height!)
 
-function findExports(filePath: string): string[] {
-  const sourceFile = ts.createSourceFile(
-    filePath,
-    fs.readFileSync(filePath, 'utf8'),
-    ts.ScriptTarget.ES2015
-  )
-
-  const exports: string[] = []
-
-  sourceFile.forEachChild((node) => {
-    if (ts.isExportDeclaration(node)) {
-      const { moduleSpecifier } = node
-      if (moduleSpecifier && ts.isStringLiteral(moduleSpecifier)) {
-        const importedFilePath = path.resolve(path.dirname(filePath), moduleSpecifier.text + '.ts')
-        exports.push(importedFilePath)
-      }
-    }
-  })
-
-  return exports
+  return getDominantColors(pixels, colors).map(rgbToHex)
 }
 
-function processFile(filePath: string): string {
-  const sourceFile = ts.createSourceFile(
-    filePath,
-    fs.readFileSync(filePath, 'utf8'),
-    ts.ScriptTarget.ES2015
-  )
-
-  let output = ''
-
-  sourceFile.forEachChild((node) => {
-    if (!ts.isImportDeclaration(node)) {
-      output += node.getFullText(sourceFile) + '\n'
-    }
-  })
-
-  return output
-}
-
-function concatFilesInTopologicalOrder(
-  filePaths: string[],
-  visited: Set<string> = new Set(),
-  output: string[] = []
-): string[] {
-  for (const filePath of filePaths) {
-    if (!visited.has(filePath)) {
-      visited.add(filePath)
-      const exports = findExports(filePath)
-      concatFilesInTopologicalOrder(exports, visited, output)
-      output.push(processFile(filePath))
-    }
-  }
-
-  return output
-}
-
-const exportedFiles = findExports(indexFilePath)
-const concatenatedContent = concatFilesInTopologicalOrder(exportedFiles).join('\n')
-fs.writeFileSync(outputFile, concatenatedContent)
-console.log(`Generated file: ${outputFile}`)
+getColors(test_image).then(console.log)

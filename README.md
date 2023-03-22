@@ -17,30 +17,32 @@ npm install --save color-supreme
 Browser
 
 ```typescript
-import { getDominantColors, rgbToRex } from 'color-supreme'
-import { getPixels } from 'color-supreme/browser'
+import { getDominantColors, getPixelsCanvas, rgbToHex } from 'color-supreme'
 
-const colors = 5
-const myImageUrl = '...'
-const pixels = getPixels(myImageUrl)
+const getColors = async (url: string, colors = 5) => {
+  const pixels = await getPixelsCanvas(url)
+  return getDominantColors(pixels, colors).map(rgbToHex)
+}
 
-console.log(getDominantColors(pixels, colors).map(rgbToRex))
+getColors('your image url').then(console.log)
 ```
 
 Node (example with sharp)
 
 ```typescript
 import sharp from 'sharp'
-import { getDominantColors, imageToPixels, rgbToRex } from 'color-supreme'
+import { getDominantColors, imageToPixels, rgbToHex } from 'color-supreme'
 
-const colors = 5
-const myImagePath = '...'
-const { data, info } = await sharp(myImagePath)
-  .raw()
-  .toBuffer({ resolveWithObject: true })
-const pixels = imageToPixels(data, info.width!, info.height!)
+const getColors = async (path: string, colors = 5) => {
+  const { data, info } = await sharp(path)
+    .raw()
+    .toBuffer({ resolveWithObject: true })
+  const pixels = imageToPixels(data, info.width!, info.height!)
 
-console.log(getDominantColors(pixels, colors).map(rgbToRex))
+  return getDominantColors(pixels, colors).map(rgbToHex)
+}
+
+getColors('your image path').then(console.log)
 ```
 
 <img src="images/test_image.png" alt="Example Image" width="200" height="200">
