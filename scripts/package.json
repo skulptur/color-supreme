@@ -1,0 +1,20 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "skulptur",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "bin": {
+    "concat-ts": "src/index.ts"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.4",
+    "ts-morph": "^17.0.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^5.0.2",
+    "unit-fns": "^0.1.4"
+  }
+}
