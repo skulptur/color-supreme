@@ -1,6 +1,6 @@
 ## `color-supreme`
 
-A powerful library for extracting dominant colors from images. Color-Supreme uses the k-means clustering algorithm to analyze the colors in an image and identify the most dominant ones, making it ideal for a range of applications such as image processing, data visualization, and search algorithms.
+A powerful library for extracting dominant colors from images. It uses the k-means clustering algorithm to analyze the colors and identify the most dominant ones, making it ideal for a range of applications such as image processing, data visualization, and search algorithms.
 
 ## Get started
 
@@ -49,15 +49,12 @@ getColors('your image path').then(console.log)
 
   <img src="images/dreamlikeartheadandshoulde_13717361.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/dreamlikeartheadandshoulde_13717361.png" alt="Example Image swatch" >
-  
 
   <img src="images/dreamlikeartheadandshoulde_31881958.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/dreamlikeartheadandshoulde_31881958.png" alt="Example Image swatch" >
-  
 
   <img src="images/dreamlikeartheadandshoulde_50300776.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/dreamlikeartheadandshoulde_50300776.png" alt="Example Image swatch" >
-  
 
   <img src="images/dreamlikeartheadandshoulde_88640242.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/dreamlikeartheadandshoulde_88640242.png" alt="Example Image swatch" >
@@ -68,6 +65,6 @@ getColors('your image path').then(console.log)
 
 ## License
 
-`color-supreme` is open source software released under the MIT license. See the LICENSE file for more information.
+This library is open source software released under the MIT license. See the LICENSE file for more information.
 
-I hope you enjoy using `color-supreme` and find it useful in your projects. If you have any questions or feedback, please don't hesitate to reach out.
+I hope you enjoy using it and find it useful in your projects. If you have any questions or feedback, please don't hesitate to reach out.

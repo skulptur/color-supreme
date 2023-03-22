@@ -6,6 +6,10 @@
   "module": "dist/color-supreme.esm.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skulptur/color-supreme"
+  },
   "keywords": [
     "functional"
   ],
