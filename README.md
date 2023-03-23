@@ -49,12 +49,15 @@ getColors('your image path').then(console.log)
 
   <img src="images/dreamlikeartheadandshoulde_13717361.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/dreamlikeartheadandshoulde_13717361.png" alt="Example Image swatch" >
+  
 
   <img src="images/dreamlikeartheadandshoulde_31881958.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/dreamlikeartheadandshoulde_31881958.png" alt="Example Image swatch" >
+  
 
   <img src="images/dreamlikeartheadandshoulde_50300776.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/dreamlikeartheadandshoulde_50300776.png" alt="Example Image swatch" >
+  
 
   <img src="images/dreamlikeartheadandshoulde_88640242.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/dreamlikeartheadandshoulde_88640242.png" alt="Example Image swatch" >

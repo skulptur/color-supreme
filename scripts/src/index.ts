@@ -1,5 +1,5 @@
 import sharp from 'sharp'
-import { getDominantColors, imageToPixels } from '../../dist'
+import { getDominantColors, imageToPixels, quantization } from '../../dist'
 import path from 'path'
 import { listFilesInDir } from './listFilesInDir'
 import { createSwatch } from './createSwatch'
@@ -18,7 +18,10 @@ const getColors = async (imagePath: string, colors = 5) => {
     .toBuffer({ resolveWithObject: true })
   const pixels = imageToPixels(data, info.width!, info.height!)
 
-  return getDominantColors(pixels, colors)
+  // console.log('quantization', quantization(pixels as any, 1))
+  // return quantization(pixels as any)
+  return quantization(pixels as any, 3)
+  // return getDominantColors(quantized, colors)
 }
 
 const imageWithSwatch = (imagePath: string, swatchPath: string) => {
