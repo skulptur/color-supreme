@@ -20,8 +20,8 @@ const getColors = async (imagePath: string, colors = 5) => {
 
   // console.log('quantization', quantization(pixels as any, 1))
   // return quantization(pixels as any)
-  return quantization(pixels as any, 3)
-  // return getDominantColors(quantized, colors)
+  // return quantization(pixels as any, 3)
+  return getDominantColors(pixels, colors)
 }
 
 const imageWithSwatch = (imagePath: string, swatchPath: string) => {
