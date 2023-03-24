@@ -1,5 +1,4 @@
 export * from './lib/getDominantColors'
-export * from './lib/imageToPixels'
 export * from './lib/getImageBufferCanvas'
-export * from './lib/palletteExtractor'
+// export * from './lib/palletteExtractor'
 export * from './lib/rgbToHex'

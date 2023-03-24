@@ -5,8 +5,16 @@
  */
 export type RGBColor = [number, number, number]
 
-export type ImageDataWithInfo = {
-  imageData: Buffer | Uint8ClampedArray
+export type BufferWithInfo = {
+  buffer: Buffer | Uint8ClampedArray
   width: number
   height: number
 }
+
+export type PixelDataWithInfo = {
+  pixels: Array<RGBColor>
+  width: number
+  height: number
+}
+
+export type LabColor = { L: number; a: number; b: number }

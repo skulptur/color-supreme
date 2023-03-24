@@ -20,8 +20,8 @@ Browser
 import { getDominantColors, getImageBufferCanvas, rgbToHex } from 'color-supreme'
 
 const getColors = async (url: string, colors = 5) => {
-  const imageDataWithInfo = await getImageBufferCanvas(url)
-  return getDominantColors(imageDataWithInfo, colors).map(rgbToHex)
+  const bufferWithInfo = await getImageBufferCanvas(url)
+  return getDominantColors(bufferWithInfo, colors).map(rgbToHex)
 }
 
 getColors('your image url').then(console.log)
@@ -38,9 +38,9 @@ const getColors = async (imagePath: string, colors = 5) => {
     .raw()
     .toBuffer({ resolveWithObject: true })
 
-  const imageDataWithInfo = { imageData: data, width: info.width, height: info.height }
+  const bufferWithInfo = { buffer: data, width: info.width, height: info.height }
 
-  return getDominantColors(imageDataWithInfo, colors)
+  return getDominantColors(bufferWithInfo, colors)
 }
 
 getColors('your image path').then(console.log)
@@ -50,15 +50,12 @@ getColors('your image path').then(console.log)
 
   <img src="images/0.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/0.png" alt="Example Image swatch" >
-  
 
   <img src="images/1.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/1.png" alt="Example Image swatch" >
-  
 
   <img src="images/2.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/2.png" alt="Example Image swatch" >
-  
 
   <img src="images/3.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/3.png" alt="Example Image swatch" >

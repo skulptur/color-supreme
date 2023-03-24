@@ -1,7 +1,7 @@
 import skmeans from 'skmeans'
-import { imageToPixels } from './imageToPixels';
+import { imageDataToPixels } from './bufferPixels';
 import { noSort } from './sorting';
-import type { ImageDataWithInfo, RGBColor } from './types'
+import type { BufferWithInfo, RGBColor } from './types'
 
 export type SkMeansResult<TPoint extends number[]> = {
   it: number;
@@ -29,13 +29,13 @@ const defaultOptions: getDominantColorsOptions = {
 /**
  * Retrieves the dominant colors from a given set of pixels.
  *
- * @param {ImageDataWithInfo} imageBufferWithInfo - A 2D array representing the pixel colors as [R, G, B] tuples.
+ * @param {BufferWithInfo} imageBufferWithInfo - A 2D array representing the pixel colors as [R, G, B] tuples.
  * @param {number} numberOfColors - The number of dominant colors to extract.
  * @returns {RGBColor[]} An array of dominant colors represented as Color tuples.
  * Returns an empty array if the input pixels array is empty.
  */
-export function getDominantColors(imageBufferWithInfo: ImageDataWithInfo, numberOfColors: number, options = defaultOptions): RGBColor[] {
-  const pixels = imageToPixels(imageBufferWithInfo)
+export function getDominantColors(imageBufferWithInfo: BufferWithInfo, numberOfColors: number, options = defaultOptions): RGBColor[] {
+  const pixels = imageDataToPixels(imageBufferWithInfo)
   
   // Return an empty array if the pixels array is empty
   if (pixels.length === 0) return []

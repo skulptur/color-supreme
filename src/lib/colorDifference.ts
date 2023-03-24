@@ -1,3 +1,5 @@
+import { LabColor } from './types'
+
 const sqrt = Math.sqrt
 const pow = Math.pow
 const cos = Math.cos
@@ -6,12 +8,6 @@ const sin = Math.sin
 const abs = Math.abs
 const exp = Math.exp
 const PI = Math.PI
-
-interface LabColor {
-  L: number
-  a: number
-  b: number
-}
 
 /**
  * Implemented as in "The CIEDE2000 Color-Difference Formula:
@@ -24,7 +20,7 @@ interface LabColor {
  * @param {labcolor} c2    Should have fields L,a,b
  * @return {float}   Difference between c1 and c2
  */
-function ciede2000(c1: LabColor, c2: LabColor): number {
+export function ciede2000(c1: LabColor, c2: LabColor): number {
   // Get L,a,b values for color 1
   const L1 = c1.L
   const a1 = c1.a
