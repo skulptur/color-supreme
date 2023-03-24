@@ -1,3 +1,5 @@
+import { BufferWithInfo } from './types'
+
 const cubicInterpolate = (p0: number, p1: number, p2: number, p3: number, t: number) => {
   const a = -0.5 * p0 + 1.5 * p1 - 1.5 * p2 + 0.5 * p3
   const b = p0 - 2.5 * p1 + 2 * p2 - 0.5 * p3
@@ -8,12 +10,12 @@ const cubicInterpolate = (p0: number, p1: number, p2: number, p3: number, t: num
 }
 
 export const bicubicInterpolation: SamplingFunction = (
-  srcX: number,
-  srcY: number,
-  imageData: Uint8ClampedArray,
-  width: number,
-  height: number,
-  channels: number
+  srcX,
+  srcY,
+  imageData,
+  width,
+  height,
+  channels
 ) => {
   const x1 = Math.floor(srcX)
   const y1 = Math.floor(srcY)
@@ -47,12 +49,12 @@ export const bicubicInterpolation: SamplingFunction = (
 }
 
 export const bilinearInterpolation: SamplingFunction = (
-  srcX: number,
-  srcY: number,
-  imageData: Uint8ClampedArray,
-  width: number,
-  height: number,
-  channels: number
+  srcX,
+  srcY,
+  imageData,
+  width,
+  height,
+  channels
 ) => {
   const x1 = Math.floor(srcX)
   const x2 = Math.min(Math.ceil(srcX), width - 1)
@@ -82,12 +84,12 @@ export const bilinearInterpolation: SamplingFunction = (
 }
 
 export const nearestNeighbor: SamplingFunction = (
-  srcX: number,
-  srcY: number,
-  imageData: Uint8ClampedArray,
-  width: number,
-  _height: number,
-  channels: number
+  srcX,
+  srcY,
+  imageData,
+  width,
+  _height,
+  channels
 ) => {
   const roundedSrcX = Math.round(srcX)
   const roundedSrcY = Math.round(srcY)
@@ -98,21 +100,21 @@ export const nearestNeighbor: SamplingFunction = (
 type SamplingFunction = (
   srcX: number,
   srcY: number,
-  imageData: Uint8ClampedArray,
+  imageData: Uint8ClampedArray | Buffer,
   width: number,
   height: number,
   channels: number
 ) => Uint8Array
 
 export function scaleImage(
-  imageData: Uint8ClampedArray,
-  width: number,
-  height: number,
+  bufferWithInfo: BufferWithInfo,
   channels: number,
   newWidth: number,
   newHeight: number,
   samplingMethod: SamplingFunction = nearestNeighbor
-): Uint8ClampedArray {
+): BufferWithInfo {
+  const { buffer, width, height } = bufferWithInfo
+
   const scaleFactorX = newWidth / width
   const scaleFactorY = newHeight / height
   const scaledImageData = new Uint8ClampedArray(newWidth * newHeight * channels)
@@ -121,7 +123,7 @@ export function scaleImage(
     for (let x = 0; x < newWidth; x++) {
       const srcX = x / scaleFactorX
       const srcY = y / scaleFactorY
-      const sampledPixel = samplingMethod(srcX, srcY, imageData, width, height, channels)
+      const sampledPixel = samplingMethod(srcX, srcY, buffer, width, height, channels)
 
       for (let c = 0; c < channels; c++) {
         const dstIndex = (y * newWidth + x) * channels + c
@@ -130,5 +132,9 @@ export function scaleImage(
     }
   }
 
-  return scaledImageData
+  return {
+    buffer: scaledImageData,
+    width: newWidth,
+    height: newHeight,
+  }
 }
