@@ -1,17 +1,21 @@
 import { BufferWithInfo, RGBColor } from './types'
 
-export function createColorSwatches(swatches: RGBColor[], swatchSize: number): BufferWithInfo {
-  const swatchesPerRow = Math.ceil(Math.sqrt(swatches.length))
-  const width = swatchesPerRow * swatchSize
-  const height = Math.ceil(swatches.length / swatchesPerRow) * swatchSize
+export function createColorSwatches(
+  swatches: RGBColor[],
+  swatchSize: number,
+  swatchesPerRow?: number
+): BufferWithInfo {
+  const columns = swatchesPerRow ?? swatches.length
+  const width = columns * swatchSize
+  const height = Math.ceil(swatches.length / columns) * swatchSize
 
   const imageData = new Uint8ClampedArray(width * height * 4)
 
   for (let i = 0; i < swatches.length; i++) {
     const color = swatches[i]
 
-    const row = Math.floor(i / swatchesPerRow)
-    const col = i % swatchesPerRow
+    const row = Math.floor(i / columns)
+    const col = i % columns
 
     const startX = col * swatchSize
     const startY = row * swatchSize
