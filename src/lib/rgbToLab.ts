@@ -1,46 +1,28 @@
-/**
- * Converts an RGB color value to a Lab color value.
- *
- * @param {number} r - The red color value (0-255).
- * @param {number} g - The green color value (0-255).
- * @param {number} b - The blue color value (0-255).
- * @returns {[number, number, number]} - An array containing the Lab color values [L, a, b].
- */
-export function rgbToLab(r: number, g: number, b: number): [number, number, number] {
-  // Convert RGB to linear RGB
-  const rLinear = r / 255
-  const gLinear = g / 255
-  const bLinear = b / 255
+import { LabColor, RGBColor } from './types'
 
-  // Apply gamma correction to linear RGB values
-  const rFinal = rLinear > 0.04045 ? Math.pow((rLinear + 0.055) / 1.055, 2.4) : rLinear / 12.92
-  const gFinal = gLinear > 0.04045 ? Math.pow((gLinear + 0.055) / 1.055, 2.4) : gLinear / 12.92
-  const bFinal = bLinear > 0.04045 ? Math.pow((bLinear + 0.055) / 1.055, 2.4) : bLinear / 12.92
+export function rgbToLab(rgb: RGBColor): LabColor {
+  var r = rgb[0] / 255,
+    g = rgb[1] / 255,
+    b = rgb[2] / 255,
+    x,
+    y,
+    z
 
-  // Convert gamma-corrected RGB to XYZ
-  const x = rFinal * 0.4124564 + gFinal * 0.3575761 + bFinal * 0.1804375
-  const y = rFinal * 0.2126729 + gFinal * 0.7151522 + bFinal * 0.072175
-  const z = rFinal * 0.0193339 + gFinal * 0.119192 + bFinal * 0.9503041
+  r = r > 0.04045 ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92
+  g = g > 0.04045 ? Math.pow((g + 0.055) / 1.055, 2.4) : g / 12.92
+  b = b > 0.04045 ? Math.pow((b + 0.055) / 1.055, 2.4) : b / 12.92
 
-  // Convert XYZ to Lab using the reference white point (D65)
-  const xRef = 95.047
-  const yRef = 100.0
-  const zRef = 108.883
+  x = (r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047
+  y = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 1.0
+  z = (r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883
 
-  // Normalize XYZ values with reference white point
-  const xNorm = x / xRef
-  const yNorm = y / yRef
-  const zNorm = z / zRef
+  x = x > 0.008856 ? Math.pow(x, 1 / 3) : 7.787 * x + 16 / 116
+  y = y > 0.008856 ? Math.pow(y, 1 / 3) : 7.787 * y + 16 / 116
+  z = z > 0.008856 ? Math.pow(z, 1 / 3) : 7.787 * z + 16 / 116
 
-  // Calculate f(x), f(y), and f(z) for Lab conversion
-  const fx = xNorm > 0.008856 ? Math.pow(xNorm, 1 / 3) : 7.787 * xNorm + 16 / 116
-  const fy = yNorm > 0.008856 ? Math.pow(yNorm, 1 / 3) : 7.787 * yNorm + 16 / 116
-  const fz = zNorm > 0.008856 ? Math.pow(zNorm, 1 / 3) : 7.787 * zNorm + 16 / 116
-
-  // Calculate Lab values
-  const L = 116 * fy - 16
-  const a = 500 * (fx - fy)
-  const _b = 200 * (fy - fz)
-
-  return [L, a, _b]
+  return {
+    L: 116 * y - 16,
+    a: 500 * (x - y),
+    b: 200 * (y - z),
+  }
 }

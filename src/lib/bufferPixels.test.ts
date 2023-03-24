@@ -18,15 +18,15 @@ describe('imageUtils', () => {
     height: 1,
   }
 
-  describe('pixelsToImageData', () => {
-    it('should convert an array of pixels to image data', () => {
-      expect(pixelsToImageData(pixelData)).toEqual(imageData)
+  describe('imageDataToPixels', () => {
+    it('should convert image data to an array of pixels', () => {
+      expect(imageDataToPixels(imageData)).toEqual(pixelData)
     })
   })
 
-  // describe('imageDataToPixels', () => {
-  //   it('should convert image data to an array of pixels', () => {
-  //     expect(imageDataToPixels(imageData)).toEqual(pixels)
+  // describe('pixelsToImageData', () => {
+  //   it('should convert an array of pixels to image data', () => {
+  //     expect(pixelsToImageData(pixelData)).toEqual(imageData)
   //   })
   // })
 

@@ -35,7 +35,7 @@ const defaultOptions: getDominantColorsOptions = {
  * Returns an empty array if the input pixels array is empty.
  */
 export function getDominantColors(imageBufferWithInfo: BufferWithInfo, numberOfColors: number, options = defaultOptions): RGBColor[] {
-  const pixels = imageDataToPixels(imageBufferWithInfo)
+  const pixels = imageDataToPixels(imageBufferWithInfo).pixels
   
   // Return an empty array if the pixels array is empty
   if (pixels.length === 0) return []

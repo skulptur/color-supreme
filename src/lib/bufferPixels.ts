@@ -5,20 +5,22 @@ import { BufferWithInfo, PixelDataWithInfo, RGBColor } from './types'
  * @param {Buffer | Uint8ClampedArray} imageDataWithInfo - The image data to convert along with its width and height.
  * @returns {number[][]} An array of pixels where each pixel is represented as an array of three RGB values.
  */
-export const imageDataToPixels = ({
-  buffer: imageData,
-  width,
-  height,
-}: BufferWithInfo): Array<RGBColor> => {
-  const pixels = []
-  for (let i = 0; i < width * height; i += 4) {
-    pixels.push([
-      imageData[i],
-      imageData[i + 1],
-      imageData[i + 2], // B
-    ] as RGBColor)
+export function imageDataToPixels(imageData: BufferWithInfo): PixelDataWithInfo {
+  const { buffer, width, height } = imageData
+  const pixels: RGBColor[] = []
+
+  for (let i = 0; i < buffer.length; i += 4) {
+    const r = buffer[i]
+    const g = buffer[i + 1]
+    const b = buffer[i + 2]
+    pixels.push([r, g, b])
   }
-  return pixels
+
+  return {
+    pixels,
+    width,
+    height,
+  }
 }
 
 /**
@@ -28,7 +30,7 @@ export const imageDataToPixels = ({
  * @param {number} height - The height of the image.
  * @returns {Uint8ClampedArray} The image data as a Uint8ClampedArray.
  */
-export const pixelsToImageData = ({ pixels, width, height }: PixelDataWithInfo): BufferWithInfo => {
+export function pixelsToImageData({ pixels, width, height }: PixelDataWithInfo): BufferWithInfo {
   const imageData = new Uint8ClampedArray(width * height * 4)
   // In this implementation, we use two index variables:
   // i for iterating over the pixels array and j for iterating over the imageData array.
