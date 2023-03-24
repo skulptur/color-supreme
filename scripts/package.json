@@ -6,7 +6,8 @@
   "author": "skulptur",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon",
+    "execute": "ts-node ./src/index.ts"
   },
   "dependencies": {
     "@types/pngjs": "^6.0.1",

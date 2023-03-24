@@ -1,5 +1,4 @@
-import { imageToPixels } from './imageToPixels'
-import type { Color } from './types'
+import type { ImageDataWithInfo } from './types'
 
 /**
 * Convert an image to a 2D array of pixel values using the browser's Canvas API.
@@ -7,7 +6,7 @@ import type { Color } from './types'
 * @returns A Promise that resolves to a an array of Color which represents the pixels of the image
 * @throws Error if the canvas context is not available.
 */
-export const getPixelsCanvas = async (imageUrl: string): Promise<Array<Color>> => {
+export const getImageBufferCanvas = async (imageUrl: string): Promise<ImageDataWithInfo> => {
   const image = new Image()
   image.src = imageUrl
   await new Promise((resolve) => (image.onload = resolve))
@@ -23,7 +22,6 @@ export const getPixelsCanvas = async (imageUrl: string): Promise<Array<Color>> =
   ctx.drawImage(image, 0, 0)
 
   const imageData = ctx.getImageData(0, 0, image.width, image.height)
-  const pixels = imageToPixels(imageData.data, image.width, image.height)
 
   // Clean up
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -32,5 +30,10 @@ export const getPixelsCanvas = async (imageUrl: string): Promise<Array<Color>> =
   image.src = ''
   canvas.remove()
 
-  return pixels as Array<Color>
+  return {
+    imageData: imageData.data,
+    width: imageData.width,
+    height: imageData.height,
+
+  }
 }
