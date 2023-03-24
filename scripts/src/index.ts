@@ -16,7 +16,7 @@ const getColors = async (imagePath: string, colors = 5) => {
   const { data, info } = await sharp(imagePath)
     .raw()
     .toBuffer({ resolveWithObject: true })
-  const imageDataWithInfo = { imageData: data, width: info.width, height: info.height }
+  const imageDataWithInfo = { buffer: data, width: info.width, height: info.height }
 
   return getDominantColors(imageDataWithInfo, colors)
 }

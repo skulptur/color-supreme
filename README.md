@@ -50,12 +50,15 @@ getColors('your image path').then(console.log)
 
   <img src="images/0.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/0.png" alt="Example Image swatch" >
+  
 
   <img src="images/1.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/1.png" alt="Example Image swatch" >
+  
 
   <img src="images/2.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/2.png" alt="Example Image swatch" >
+  
 
   <img src="images/3.png" alt="Example Image" width="200" height="200">
   <img src="images/generated/3.png" alt="Example Image swatch" >
