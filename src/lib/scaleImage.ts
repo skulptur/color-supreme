@@ -109,12 +109,13 @@ type SamplingFunction = (
 export function scaleImage(
   bufferWithInfo: BufferWithInfo,
   channels: number,
-  newWidth: number,
-  newHeight: number,
+  targetWidth: number,
+  targetHeight: number,
   samplingMethod: SamplingFunction = nearestNeighbor
 ): BufferWithInfo {
   const { buffer, width, height } = bufferWithInfo
-
+  const newWidth = Math.round(targetWidth)
+  const newHeight = Math.round(targetHeight)
   const scaleFactorX = newWidth / width
   const scaleFactorY = newHeight / height
   const scaledImageData = new Uint8ClampedArray(newWidth * newHeight * channels)
@@ -137,4 +138,25 @@ export function scaleImage(
     width: newWidth,
     height: newHeight,
   }
+}
+
+export function scaleToMaxSize(
+  input: BufferWithInfo,
+  targetMaxSize: number,
+  tolerance: number = 0
+): BufferWithInfo {
+  const { width, height } = input
+  const longestSide = Math.max(width, height)
+
+  if (longestSide <= targetMaxSize + tolerance || longestSide <= targetMaxSize - tolerance) {
+    return input
+  }
+
+  const scaleFactor = targetMaxSize / longestSide
+  const newWidth = scaleFactor * width
+  const newHeight = scaleFactor * height
+
+  const scaledImage = scaleImage(input, 3, newWidth, newHeight, nearestNeighbor)
+
+  return scaledImage
 }

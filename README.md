@@ -48,20 +48,32 @@ getColors('your image path').then(console.log)
 
 <!-- START GENERATED CONTENT -->
 
-  <img src="images/0.png" alt="Example Image" width="200" height="200">
-  <img src="images/swatches/0.png" alt="Example Image swatch" >
+  <img src="images/0.jpeg" alt="Example Image" width="200" height="200">
+  <img src="images/swatches/0.jpeg" alt="Example Image swatch" >
   
 
-  <img src="images/1.png" alt="Example Image" width="200" height="200">
-  <img src="images/swatches/1.png" alt="Example Image swatch" >
+  <img src="images/1.jpeg" alt="Example Image" width="200" height="200">
+  <img src="images/swatches/1.jpeg" alt="Example Image swatch" >
   
 
-  <img src="images/2.png" alt="Example Image" width="200" height="200">
-  <img src="images/swatches/2.png" alt="Example Image swatch" >
+  <img src="images/2.jpeg" alt="Example Image" width="200" height="200">
+  <img src="images/swatches/2.jpeg" alt="Example Image swatch" >
   
 
-  <img src="images/3.png" alt="Example Image" width="200" height="200">
-  <img src="images/swatches/3.png" alt="Example Image swatch" >
+  <img src="images/3.jpeg" alt="Example Image" width="200" height="200">
+  <img src="images/swatches/3.jpeg" alt="Example Image swatch" >
+  
+
+  <img src="images/Bildschirm­foto 2023-03-24 um 23.03.27.png" alt="Example Image" width="200" height="200">
+  <img src="images/swatches/Bildschirm­foto 2023-03-24 um 23.03.27.png" alt="Example Image swatch" >
+  
+
+  <img src="images/Bildschirm­foto 2023-03-24 um 23.03.36.png" alt="Example Image" width="200" height="200">
+  <img src="images/swatches/Bildschirm­foto 2023-03-24 um 23.03.36.png" alt="Example Image swatch" >
+  
+
+  <img src="images/Bildschirm­foto 2023-03-24 um 23.05.39.png" alt="Example Image" width="200" height="200">
+  <img src="images/swatches/Bildschirm­foto 2023-03-24 um 23.05.39.png" alt="Example Image swatch" >
   
 <!-- END GENERATED CONTENT -->
 

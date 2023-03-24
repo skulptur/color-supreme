@@ -1,5 +1,8 @@
 import skmeans from 'skmeans'
 import { imageDataToPixels } from './bufferPixels';
+import { ciede2000 } from './colorDifference';
+import { rgbToLab } from './rgbToLab';
+import { scaleToMaxSize } from './scaleImage';
 import { noSort } from './sorting';
 import type { BufferWithInfo, RGBColor } from './types'
 
@@ -35,12 +38,17 @@ const defaultOptions: getDominantColorsOptions = {
  * Returns an empty array if the input pixels array is empty.
  */
 export function getDominantColors(imageBufferWithInfo: BufferWithInfo, numberOfColors: number, options = defaultOptions): RGBColor[] {
-  const pixels = imageDataToPixels(imageBufferWithInfo).pixels
+  // const resizedImage = scaleToMaxSize(imageBufferWithInfo, 256, 30)
+  const resizedImage = imageBufferWithInfo
+
+  // TODO: maybe it makes sense to convert directly to lab for perf reasons regarding distance? but then the pixels need to be retreived back in the end
+  const pixels = imageDataToPixels(resizedImage).pixels
   
   // Return an empty array if the pixels array is empty
   if (pixels.length === 0) return []
 
   const _numberOfColors = Math.min(pixels.length, numberOfColors)
+  // const result = skmeans(pixels, _numberOfColors, options.centroidValues, options.iterations, (c1, c2) => ciede2000(rgbToLab(c1), rgbToLab(c2)))
   const result = skmeans(pixels, _numberOfColors, options.centroidValues, options.iterations)
 
   const sorted = options.sortFn(numberOfColors, result)
