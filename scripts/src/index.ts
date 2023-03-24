@@ -20,9 +20,6 @@ const getColors = async (imagePath: string, colors = 5) => {
 
   return getDominantColors(imageDataWithInfo, colors)
 }
-// console.log('quantization', quantization(pixels as any, 1))
-// return quantization(pixels as any)
-// return quantization(pixels as any, 3)
 
 const imageWithSwatch = (imagePath: string, swatchPath: string) => {
   return `
@@ -42,7 +39,10 @@ const updateMarkdown = async () => {
     imagePaths.map(async (imagePath) => {
       const colors = await getColors(imagePath)
       const imageFilenameName = path.basename(imagePath)
-      const generatedSwatch = createSwatch(colors, generatedImagesDir + '/' + imageFilenameName)
+      const generatedSwatch = await createSwatch(
+        colors,
+        generatedImagesDir + '/' + imageFilenameName
+      )
 
       return imageWithSwatch(imagePath, generatedSwatch)
     })

@@ -1,35 +1,34 @@
-import * as fs from 'fs'
-import { PNG } from 'pngjs'
+import { createColorSwatches, RGBColor } from '../../dist'
+import sharp from 'sharp'
 
-export function createSwatch(rgbValues: number[][], path: string): string {
-  const swatchWidth = 50
-  const swatchHeight = 50
-  const numSwatches = rgbValues.length
+async function saveImageAsPng(
+  imageData: Uint8ClampedArray | Buffer,
+  channels: 1 | 2 | 3 | 4,
+  width: number,
+  height: number,
+  outputPath: string
+): Promise<void> {
+  try {
+    // Create a sharp instance with the raw image data and provided metadata
+    const image = sharp(Buffer.from(imageData), {
+      raw: {
+        width: width,
+        height: height,
+        channels: channels,
+      },
+    })
 
-  const pngWidth = swatchWidth * numSwatches
-  const pngHeight = swatchHeight
+    // Save the image as a PNG
+    await image.png().toFile(outputPath)
 
-  const png = new PNG({
-    width: pngWidth,
-    height: pngHeight,
-  })
-
-  for (let i = 0; i < numSwatches; i++) {
-    const [r, g, b] = rgbValues[i]
-
-    for (let y = 0; y < swatchHeight; y++) {
-      for (let x = 0; x < swatchWidth; x++) {
-        const idx = (y * swatchWidth + x) << 2
-        png.data[((i * swatchWidth + x + pngWidth * y) << 2) + 0] = r
-        png.data[((i * swatchWidth + x + pngWidth * y) << 2) + 1] = g
-        png.data[((i * swatchWidth + x + pngWidth * y) << 2) + 2] = b
-        png.data[((i * swatchWidth + x + pngWidth * y) << 2) + 3] = 255
-      }
-    }
+    console.log(`Image saved as ${outputPath}`)
+  } catch (err) {
+    console.error('Failed to save image:', err)
   }
+}
 
-  const writeStream = fs.createWriteStream(path)
-  png.pack().pipe(writeStream)
-
+export const createSwatch = async (rgbValues: Array<RGBColor>, path: string): Promise<string> => {
+  const swatch = createColorSwatches(rgbValues, 50)
+  await saveImageAsPng(swatch.buffer, 4, swatch.width, swatch.height, path)
   return path
 }

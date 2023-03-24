@@ -1,17 +1,3 @@
-export const nearestNeighbor: SamplingFunction = (
-  srcX: number,
-  srcY: number,
-  imageData: Uint8ClampedArray,
-  width: number,
-  height: number,
-  channels: number
-) => {
-  const roundedSrcX = Math.round(srcX)
-  const roundedSrcY = Math.round(srcY)
-  const srcIndex = (roundedSrcY * width + roundedSrcX) * channels
-  return new Uint8Array(imageData.slice(srcIndex, srcIndex + channels))
-}
-
 const cubicInterpolate = (p0: number, p1: number, p2: number, p3: number, t: number) => {
   const a = -0.5 * p0 + 1.5 * p1 - 1.5 * p2 + 0.5 * p3
   const b = p0 - 2.5 * p1 + 2 * p2 - 0.5 * p3
@@ -93,6 +79,20 @@ export const bilinearInterpolation: SamplingFunction = (
   }
 
   return sampledPixel
+}
+
+export const nearestNeighbor: SamplingFunction = (
+  srcX: number,
+  srcY: number,
+  imageData: Uint8ClampedArray,
+  width: number,
+  _height: number,
+  channels: number
+) => {
+  const roundedSrcX = Math.round(srcX)
+  const roundedSrcY = Math.round(srcY)
+  const srcIndex = (roundedSrcY * width + roundedSrcX) * channels
+  return new Uint8Array(imageData.slice(srcIndex, srcIndex + channels))
 }
 
 type SamplingFunction = (

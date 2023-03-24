@@ -1,4 +1,6 @@
 export * from './lib/getDominantColors'
 export * from './lib/getImageBufferCanvas'
-// export * from './lib/palletteExtractor'
+export * from './lib/scaleImage'
 export * from './lib/rgbToHex'
+export * from './lib/types'
+export * from './lib/createColorSwatches'
