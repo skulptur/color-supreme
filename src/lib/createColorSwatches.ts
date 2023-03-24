@@ -2,7 +2,7 @@ import { BufferWithInfo, RGBColor } from './types'
 
 export function createColorSwatches(
   swatches: RGBColor[],
-  swatchSize: number,
+  swatchSize: number = 50,
   swatchesPerRow?: number
 ): BufferWithInfo {
   const columns = swatchesPerRow ?? swatches.length
